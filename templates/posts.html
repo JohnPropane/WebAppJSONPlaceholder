@@ -1,10 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% include 'header.html' %}
 </head>
 <body>
+<!--HERO SECTION-->
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
 
+<!--TEXT SECTION-->
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Welcome to the JsonWebApp Posts</h1>
+        <p class="col-lg-10 fs-4">Here you can find your posts along with comments from other users</p>
+      </div>
+
+<!--FORM SECTION-->
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="{{ url_for('posts') }}" method="post">
+          <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Post filtering</h1>
+          <div class="form-floating mb-3">
+            <input name="max-posts" type="number" class="form-control" id="floatingInput" placeholder="20" min="1" max="100" value="100" required>
+            <label for="floatingInput">Number of posts</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input name="min-len" type="number" class="form-control" id="floatingInput2" placeholder="20" min="1" max="500" value="1" oninput="validateInputs()" required>
+            <label for="floatingInput2">Minimum post length</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input name="max-len" type="number" class="form-control" id="floatingInput3" placeholder="20" min="1" max="500" value="500" oninput="validateInputs()" required>
+            <label for="floatingInput3">Maximum post length</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Filtr</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<!--POST SECTION-->
+<div class="album py-5 bg-body-tertiary">
+<h1 style="text-align: center;" class="mb-5">Number of posts: {{data[-1]}}</h1>
+{% for data in data[:-1] %}
+<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5  bg-body-tertiary">
+  <div class="card" style="width: 45rem;">
+    <div class="card-body">
+<!--POST TITLE-->
+      <h5 class="card-title">{{data[0]}}</h5>
+
+<!--POST BODY-->
+      <p class="card-text">{{data[1]}}</p>
+
+<!--SHOW COMMENTS BUTTON-->
+      <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{data[3]}}" aria-expanded="false" aria-controls="collapseExample">Show comments</button>
+      <div class="collapse" id="collapseExample{{data[3]}}">
+
+<!--COMMENTS SECTION-->
+      {%for content in data[2]%}
+      <div class="card mb-2" style="width: 42.5rem;">
+        <div class="card-body">
+
+<!--COMMENT TITLE-->
+          <h5 class="card-title">{{content[2]}}</h5>
+
+<!--COMMENT EMAIL-->
+          <h6 class="card-subtitle mb-2 text-body-secondary">{{content[0]}}</h6>
+
+<!--COMMENT BODY-->
+          <p class="card-text">{{content[1]}}</p>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+{% include 'footer.html' %}
+<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
 </body>
 </html>
