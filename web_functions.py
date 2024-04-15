@@ -4,7 +4,7 @@ import requests
 def generate_posts(num_of_posts):
     data = requests.get("https://jsonplaceholder.typicode.com/posts").json()
     comments_data = requests.get
-                    ("https://jsonplaceholder.typicode.com/comments").json()
+    ("https://jsonplaceholder.typicode.com/comments").json()
     posts = []
     for i in range(num_of_posts):
         id_post = data[i]["id"]
