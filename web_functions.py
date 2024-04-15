@@ -39,3 +39,23 @@ def generate2(num_of_posts, min_len=0, max_len=1000):
                 return posts
     posts.append(generated_posts)
     return posts
+
+
+def generate_albums(num_of_albums=100):
+    data = requests.get("https://jsonplaceholder.typicode.com/albums").json()
+    albums = []
+    for i in range(num_of_albums):
+        album_id = data[i]["id"]
+        album_title = data[i]["title"]
+        albums.append([album_id, album_title])
+    return albums
+
+
+def generate_thumb(num_of_albums=100):
+    data = requests.get("https://jsonplaceholder.typicode.com/photos").json()
+    thumbs = []
+    for i in range(0, num_of_albums*50, 50):
+        thumbs.append([data[i]["thumbnailUrl"],
+                       data[i + 1]["thumbnailUrl"],
+                       data[i + 2]["thumbnailUrl"]])
+    return thumbs

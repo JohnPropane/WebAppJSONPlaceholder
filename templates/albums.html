@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <body>
+{% include 'header.html'%}
+<main>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
 
+<!--TEXT SECTION-->
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Welcome to the JsonWebApp Albums</h1>
+        <p class="col-lg-10 fs-4">Here you can find albus along with photos</p>
+      </div>
+
+<!--FORM SECTION-->
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="{{ url_for('albums') }}" method="post">
+          <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Post filtering</h1>
+          <div class="form-floating mb-3">
+            <input name="max-posts" type="number" class="form-control" id="floatingInput" placeholder="20" min="0" max="100" value="100">
+            <label for="floatingInput">Number of posts</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Filtr</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!--ALBUMS SECTION-->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+<!--VARIABLE USED TO SELECT CORRECT LIST OF PHOTOS-->
+          {% set ns = namespace(c = 0) %}
+          {% for data in data%}
+          <div class="col">
+          <div class="card shadow-sm">
+<!--CAROUSEL OF 3 FIRST PHOTOS-->
+            <div id="carouselExampleFade{{ns.c}}" class="carousel slide carousel-fade">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{{thumbs[ns.c][0]}}" class="d-block w-100" alt="photo">
+                </div>
+                <div class="carousel-item">
+                  <img src="{{thumbs[ns.c][1]}}" class="d-block w-100" alt="photo">
+                </div>
+                <div class="carousel-item">
+                  <img src="{{thumbs[ns.c][2]}}" class="d-block w-100" alt="photo">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade{{ns.c}}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade{{ns.c}}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+<!--FOOTER OF CARD-->
+              <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                  <p class="lead" style="text-align: left;">{{data[1]}}</p>
+                <div class="btn-group" style="margin-left: 10px;">
+                    <a href="{{url_for('photos', id_1=data[0])}}">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--VARIABLE INCREMENTATION-->
+          {% set ns.c = ns.c + 1 %}
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+{% include 'footer.html' %}
 </body>
 </html>
