@@ -1,6 +1,8 @@
 import requests
 
 URL = "https://jsonplaceholder.typicode.com"
+
+
 def generate_posts(num_of_posts):
     data = requests.get(f"{URL}/posts").json()
     comments_data = requests.get(f"{URL}/comments").json()
@@ -72,5 +74,9 @@ def generate_photos(albumid, num_of_photos=50):
             photo_url = data[i]["url"]
             button_id = f"button{i}"
             thumbnail = data[i]["thumbnailUrl"]
-            photos.append([photo_title, photo_url, album_id, button_id, thumbnail])
+            photos.append([photo_title,
+                           photo_url,
+                           album_id,
+                           button_id,
+                           thumbnail])
     return photos
