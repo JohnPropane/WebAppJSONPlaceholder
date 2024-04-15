@@ -3,7 +3,8 @@ import requests
 
 def generate_posts(num_of_posts):
     data = requests.get("https://jsonplaceholder.typicode.com/posts").json()
-    comments_data = requests.get("https://jsonplaceholder.typicode.com/comments").json()
+    comments_data = requests.get
+    ("https://jsonplaceholder.typicode.com/comments").json()
     posts = []
     for i in range(num_of_posts):
         id_post = data[i]["id"]
@@ -54,5 +55,7 @@ def generate_thumb(num_of_albums=100):
     data = requests.get("https://jsonplaceholder.typicode.com/photos").json()
     thumbs = []
     for i in range(0, num_of_albums*50, 50):
-        thumbs.append([data[i]["thumbnailUrl"], data[i + 1]["thumbnailUrl"], data[i + 2]["thumbnailUrl"]])
+        thumbs.append([data[i]["thumbnailUrl"], 
+                       data[i + 1]["thumbnailUrl"], 
+                       data[i + 2]["thumbnailUrl"]])
     return thumbs
