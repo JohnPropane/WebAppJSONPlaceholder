@@ -22,9 +22,21 @@ def posts():
     return render_template('posts.html', data=data)
 
 
-@app.route('/albums')
+@app.route('/albums/', methods=['GET', 'POST'])
 def albums():
-    return render_template("albums.html")
+    if request.method == 'POST':
+        num_of_albums = int(request.form['max-posts'])
+        data = web_functions.generate_albums(num_of_albums)
+        thumbs = web_functions.generate_thumb(num_of_albums)
+    else:
+        data = web_functions.generate_albums()
+        thumbs = web_functions.generate_thumb()
+    return render_template('albums.html', data=data, thumbs=thumbs)
+
+
+@app.route('/albums/photos/<id_1>', methods=['GET', 'POST'])
+def photos(id_1):
+    return render_template('photos.html')
 
 
 if __name__ == '__main__':
