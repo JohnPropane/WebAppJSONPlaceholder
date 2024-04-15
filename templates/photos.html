@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 <body>
+{% include 'header.html'%}
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
 
+<!--TEXT SECTION-->
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Welcome to the JsonWebApp Photos</h1>
+        <p class="col-lg-10 fs-4">Here you can see photos from previously chosen album.</p>
+      </div>
+
+<!--FORM SECTION-->
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="{{ url_for('photos', id_1=id_1) }}" method="post">
+          <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Post filtering</h1>
+          <div class="form-floating mb-3">
+            <input name="max-posts" type="number" class="form-control" id="floatingInput" placeholder="20" min="0" max="50" value="50">
+            <label for="floatingInput">Number of posts</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Filtr</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!--PHOTOS SECTION-->
+<div class="mb-5 bg-body-tertiary" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    {% for data in data %}
+    <div class="card m-3" style="width: 18rem;">
+<!--POPUP PHOTOS-->
+      <button type="button" class="btn btn-primary p-0" style="border: 0" data-bs-toggle="modal" data-bs-target="#{{data[3]}}">
+        <img src="{{data[4]}}" class="card-img-top" alt="photo">
+      </button>
+        <div class="modal fade" id="{{data[3]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel" style="text-align: center;">{{data[0]}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <img src="{{data[1]}}" class="card-img-top" alt="photo">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--CARD FOOTER-->
+      <div class="card-body">
+        <h5 class="card-title">{{data[0]}}</h5>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% include 'footer.html'%}
+<script src="{{ url_for('static', filename='scripts/modal.js') }}"></script>
 </body>
 </html>

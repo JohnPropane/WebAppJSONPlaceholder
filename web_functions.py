@@ -1,10 +1,11 @@
 import requests
 
+URL = "https://jsonplaceholder.typicode.com"
+
 
 def generate_posts(num_of_posts):
-    data = requests.get("https://jsonplaceholder.typicode.com/posts").json()
-    comments_data = requests.get
-    ("https://jsonplaceholder.typicode.com/comments").json()
+    data = requests.get(f"{URL}/posts").json()
+    comments_data = requests.get(f"{URL}/comments").json()
     posts = []
     for i in range(num_of_posts):
         id_post = data[i]["id"]
@@ -42,7 +43,7 @@ def generate2(num_of_posts, min_len=0, max_len=1000):
 
 
 def generate_albums(num_of_albums=100):
-    data = requests.get("https://jsonplaceholder.typicode.com/albums").json()
+    data = requests.get(f"{URL}/albums").json()
     albums = []
     for i in range(num_of_albums):
         album_id = data[i]["id"]
@@ -52,10 +53,30 @@ def generate_albums(num_of_albums=100):
 
 
 def generate_thumb(num_of_albums=100):
-    data = requests.get("https://jsonplaceholder.typicode.com/photos").json()
+    data = requests.get(f"{URL}/photos").json()
     thumbs = []
     for i in range(0, num_of_albums*50, 50):
         thumbs.append([data[i]["thumbnailUrl"],
                        data[i + 1]["thumbnailUrl"],
                        data[i + 2]["thumbnailUrl"]])
     return thumbs
+
+
+def generate_photos(albumid, num_of_photos=50):
+    data = requests.get(f"{URL}/photos").json()
+    photos = []
+    for i in range(len(data)):
+        if num_of_photos == len(photos):
+            return photos
+        if int(data[i]["albumId"]) == int(albumid):
+            album_id = data[i]["albumId"]
+            photo_title = data[i]["title"]
+            photo_url = data[i]["url"]
+            button_id = f"button{i}"
+            thumbnail = data[i]["thumbnailUrl"]
+            photos.append([photo_title,
+                           photo_url,
+                           album_id,
+                           button_id,
+                           thumbnail])
+    return photos
