@@ -36,7 +36,12 @@ def albums():
 
 @app.route('/albums/photos/<id_1>', methods=['GET', 'POST'])
 def photos(id_1):
-    return render_template('photos.html')
+    if request.method == 'POST':
+        num_of_photos = int(request.form['max-posts'])
+        data = web_functions.generate_photos(id_1, num_of_photos)
+    else:
+        data = web_functions.generate_photos(id_1)
+    return render_template('photos.html', data=data, id_1=id_1)
 
 
 if __name__ == '__main__':
