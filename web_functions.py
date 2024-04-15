@@ -56,6 +56,5 @@ def generate_thumb(num_of_albums=100):
     thumbs = []
     for i in range(0, num_of_albums*50, 50):
         thumbs.append([data[i]["thumbnailUrl"], 
-                       data[i + 1]["thumbnailUrl"], 
-                       data[i + 2]["thumbnailUrl"]])
+        data[i + 1]["thumbnailUrl"], data[i + 2]["thumbnailUrl"]])
     return thumbs
