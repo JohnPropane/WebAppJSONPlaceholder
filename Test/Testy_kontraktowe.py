@@ -3,11 +3,13 @@ import web_functions
 # pip install requests-mock
 import requests_mock
 
+
 # Definicja fixture, która tworzy mocka dla requests
 @pytest.fixture
 def mock_requests():
     with requests_mock.Mocker() as m:
         yield m
+
 
 # Testowanie funkcji generate_posts
 def test_generate_posts(mock_requests):
@@ -31,6 +33,7 @@ def test_generate_posts(mock_requests):
     assert posts[0][2][0][1] == "body1"
     assert posts[0][2][0][2] == "name1"
 
+
 # Testowanie funkcji generate2
 def test_generate2():
     # Wywołanie testowanej funkcji
@@ -38,6 +41,7 @@ def test_generate2():
     # Sprawdzenie wyników
     assert len(posts) == 2
     assert posts[-1] == 1
+
 
 # Testowanie funkcji generate_albums
 def test_generate_albums(mock_requests):
@@ -51,6 +55,7 @@ def test_generate_albums(mock_requests):
     assert len(albums) == 1
     assert albums[0][0] == 1
     assert albums[0][1] == "title1"
+
 
 # Testowanie funkcji generate_thumb
 def test_generate_thumb(mock_requests):
