@@ -68,7 +68,7 @@ class TestWeb(unittest.TestCase):
              1],
             ["Title 2",
              "Body 2",
-             [["email2@example.com","Comment 2", "Name 2"]],
+             [["email2@example.com", "Comment 2", "Name 2"]],
              2],
             2
         ]
