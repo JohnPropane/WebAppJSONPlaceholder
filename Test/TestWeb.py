@@ -12,19 +12,33 @@ class TestWeb(unittest.TestCase):
         # Definiowanie mockowanych odpowiedzi
         mock_response_posts = [{"id": 1, "title": "Title 1", "body": "Body 1"},
                                {"id": 2, "title": "Title 2", "body": "Body 2"}]
-        mock_response_comments = [{"postId": 1, "email": "email1@example.com", "body": "Comment 1", "name": "Name 1"},
-                                  {"postId": 2, "email": "email2@example.com", "body": "Comment 2", "name": "Name 2"}]
+        mock_response_comments = [{"postId": 1,
+                                   "email": "email1@example.com",
+                                   "body": "Comment 1",
+                                   "name": "Name 1"},
+                                  {"postId": 2,
+                                   "email": "email2@example.com",
+                                   "body": "Comment 2",
+                                   "name": "Name 2"}]
         # Ustawienie mockowanych odpowiedzi jako wyników funkcji requests.get
         mock_get.side_effect = [
-            unittest.mock.Mock(json=unittest.mock.Mock(return_value=mock_response_posts)),
-            unittest.mock.Mock(json=unittest.mock.Mock(return_value=mock_response_comments))
+            unittest.mock.Mock(json=unittest.mock.Mock
+                               (return_value=mock_response_posts)),
+            unittest.mock.Mock(json=unittest.mock.Mock
+                               (return_value=mock_response_comments))
         ]
         # Wywołanie testowanej funkcji
         generated_posts = web.generate_posts(2)
         # Definiowanie oczekiwanych wyników
         expected_posts = [
-            ["Title 1", "Body 1", [["email1@example.com", "Comment 1", "Name 1"]], 1],
-            ["Title 2", "Body 2", [["email2@example.com", "Comment 2", "Name 2"]], 2]
+            ["Title 1",
+             "Body 1",
+             [["email1@example.com", "Comment 1", "Name 1"]],
+             1],
+            ["Title 2",
+             "Body 2",
+             [["email2@example.com", "Comment 2", "Name 2"]],
+             2]
         ]
         # Porównanie wyników
         self.assertEqual(generated_posts, expected_posts)
@@ -34,16 +48,28 @@ class TestWeb(unittest.TestCase):
     def test_generate2(self, mock_generate_posts):
         # Ustawienie mockowanej odpowiedzi
         mock_generate_posts.return_value = [
-            ["Title 1", "Body 1", [["email1@example.com", "Comment 1", "Name 1"]], 1],
-            ["Title 2", "Body 2", [["email2@example.com", "Comment 2", "Name 2"]], 2]
+            ["Title 1",
+             "Body 1",
+             [["email1@example.com", "Comment 1", "Name 1"]],
+             1],
+            ["Title 2",
+             "Body 2",
+             [["email2@example.com", "Comment 2", "Name 2"]],
+             2]
         ]
         # Wywołanie testowanej funkcji i porównanie wyników
         self.assertEqual(web.generate2(10, 1001, 1000), "Error1")
         self.assertEqual(web.generate2(101, 0, 1000), "Error2")
         # Definiowanie oczekiwanych wyników
         expected_posts = [
-            ["Title 1", "Body 1", [["email1@example.com", "Comment 1", "Name 1"]], 1],
-            ["Title 2", "Body 2", [["email2@example.com", "Comment 2", "Name 2"]], 2],
+            ["Title 1",
+             "Body 1",
+             [["email1@example.com", "Comment 1", "Name 1"]],
+             1],
+            ["Title 2",
+             "Body 2",
+             [["email2@example.com","Comment 2", "Name 2"]],
+             2],
             2
         ]
         # Wywołanie testowanej funkcji i porównanie wyników
@@ -70,9 +96,18 @@ class TestWeb(unittest.TestCase):
     def test_generate_photos(self, mock_get):
         # Ustawienie mockowanej odpowiedzi
         mock_response = [
-            {"albumId": 1, "title": "Photo 1", "url": "url1", "thumbnailUrl": "thumbnail1"},
-            {"albumId": 1, "title": "Photo 2", "url": "url2", "thumbnailUrl": "thumbnail2"},
-            {"albumId": 2, "title": "Photo 3", "url": "url3", "thumbnailUrl": "thumbnail3"}
+            {"albumId": 1,
+             "title": "Photo 1",
+             "url": "url1",
+             "thumbnailUrl": "thumbnail1"},
+            {"albumId": 1,
+             "title": "Photo 2",
+             "url": "url2",
+             "thumbnailUrl": "thumbnail2"},
+            {"albumId": 2,
+             "title": "Photo 3",
+             "url": "url3",
+             "thumbnailUrl": "thumbnail3"}
         ]
         mock_get.return_value.json.return_value = mock_response
         # Wywołanie testowanej funkcji
